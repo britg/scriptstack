@@ -1,0 +1,18 @@
+#create
+    #sidebar
+        - if !@stack.published
+            %input#stackPublish{:type=>"button", :value=>"Publish", :disabled=>true}
+        - else
+            %h4 Public, published Stack!
+            %input{:value => @params[:env]}
+
+    #builder
+        - if @stack.title
+            %h2#stackTitle= @stack.title
+            %input{:type=>'hidden', :id=>'stackId', :value=>@stack.id}
+        - else
+            %h2#stackTitle.unedited Click here to edit this stack's title
+
+-if @stack.id
+    %script
+        var active_stack = Stack(#{@stack.to_json}, true)

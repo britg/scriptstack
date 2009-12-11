@@ -1,0 +1,38 @@
+#loginSignup
+    %h2 Login or Create an Account
+
+    %a.loginTab{:href=>"/login"} Login
+    %a.signupTab{:href=>"/signup"} Create a new Account
+
+    %form#loginForm{:action=>'/users'}
+
+        %label Username or Email Address
+        %input{:type=>'text', :name=>'user[username_or_email]'}
+
+        %label Password
+        %input{:type => 'password', :name=>'user[password]'}
+          
+        %input{:type=>'checkbox', :name=>'remember'} Remember me?
+
+        %input{:type=>'submit', :value=>"Login"}
+
+    %form#signupForm.inactive{:action=>'/users/create', :method=>"POST"}
+
+        %label Username
+        %input{:type=>'text', :name=>'user[username]'}
+
+        %label Email Address 
+        %input{:type=>'text', :name=>'user[email]'}
+
+        %label Password
+        %input{:type => 'password', :name=>'user[password]'}
+
+        %label Verify Password 
+        %input{:type => 'password', :name=>'verify'}
+
+        %input{:type=>'checkbox', :name=>'remmeber'} Remember me?
+
+        %input{:type=>'submit', :name=>'create', :value=>"Create new account"}
+
+        %input{:type=>'hidden', :name=>'authenticity_token', :value=>form_authenticity_token}
+

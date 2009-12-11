@@ -1,0 +1,17 @@
+@import blueprint/modules/liquid.sass
++blueprint-liquid-grid
+
+=outercontainer
+    min-width= !blueprint_liquid_container_min_width
+    :width 100%
+    margin: 0 auto
+    +clearfix
+
+!blueprint_liquid_container_width = 96%
+
+=container
+    min-width= !blueprint_liquid_container_min_width
+    width= !blueprint_liquid_container_width 
+    :margin 0 auto
+    +clearfix
+    :text-align left
