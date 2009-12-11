@@ -1,0 +1,128 @@
+// This import applies a global reset to any page that imports this stylesheet.
+@import blueprint/reset.sass
+// To configure blueprint, edit the partials/base.sass file.
+// Import all the default blueprint modules so that we can access their mixins.
+@import blueprint
+// Import the non-default scaffolding module.
+@import blueprint/modules/scaffolding.sass
+
+@import partials/base.sass
+
+// To generate css equivalent to the blueprint css but with your configuration applied, uncomment:
+//+blueprint
+
+//Recommended Blueprint configuration with scoping and semantic layout:
++blueprint-typography("body.bp")
++blueprint-scaffolding("body.bp")
+
+body.bp
+    +blueprint-utilities
+    +blueprint-debug
+    +blueprint-interaction
+
+form.bp
+    +blueprint-form
+
+body.bp
+    :font-size 90%
+    :line-height 1.1
+
+    #head
+        +outercontainer
+        :background #272727
+        :text-align left
+
+        .headcontent
+            :margin 0.5em
+            :margin-left 3em
+
+            #logo
+                :font-size 150%
+                :color #fff
+
+                a
+                    :color #fff
+                    :text-decoration none
+                    :font-weight bold
+
+            #nav
+                :float right
+                :margin-right 3em
+
+                ul
+                    :margin 0
+                    :height 30px
+
+                    li
+                        :float left
+                        :display inline
+
+                        a
+                            :display block
+                            :padding 5px 15px
+                            :color #fff
+                            :text-decoration none
+                            :font-weight bold
+        
+
+    #content
+        +container
+        :padding-top 20px
+
+        #home
+            +container
+            :width 950px
+
+            h1.lead
+                :text-align center
+                :margin-top .5em
+                :margin-bottom 1em
+    
+            #splash
+                +container
+                
+                .question
+                    :font-size 140%
+                    :font-weight bold
+                .answer
+                    :font-size 120%
+
+                #splashLeft
+                    +column(12, true)
+
+                    #splashLeftInner
+                        +box
+
+                #splashRight
+                    +column(12, true)
+
+                    #splashRightInner
+                        +box
+                        :background none
+
+        #loginSignup
+            form#signupForm.inactive
+                :display none
+            form#loginForm.inactive
+                :display none
+
+        #create
+            +container
+
+            #sidebar
+                :width 300px
+                :position fixed
+                :right 2%
+                :top 60px
+
+            #builder
+                :margin-right 310px
+
+                #stackTitle
+                    :margin-top 0
+
+                    .editing > input
+                        :font-size 100%
+
+                #stackTitle.unedited
+                    :color #ccc

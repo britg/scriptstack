@@ -1,0 +1,24 @@
+#home
+    %h1.lead <strong>Organize</strong> and <strong>share</strong> your <strong style="color:#8FD401;">javascripts</strong>.
+
+    #splash
+        #splashLeft
+            #splashLeftInner
+                %h2.question Have four or five javascript libraries that get included in every new project?
+                %p.answer Don't we all! Create a stack and easily grab them every time you need them.
+                %h2.question Collected a killer set of jQuery plugins and want to share them?
+                %p.answer Sweet! Publish your favorite script combinations (a <strong><em>stack</em></strong>) and share them with other devs.
+                %h2.question Need a set of scripts that implements Lightbox2, fancy tooltips, and Twitter search?
+                %p.answer There's a stack for that!  Find the best set of scripts for just about any purpose.
+                %p
+                    %a{:href=>"/users"}Click here to signup
+
+        #splashRight
+            #splashRightInner
+                %a{:href=>"/create"} Create a stack
+
+                %ul
+                    - @stacks.each do |stack|
+                        %li
+                            %a{:href=>"/stacks/#{stack.id}"}
+                                = stack.title
