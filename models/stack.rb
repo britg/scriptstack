@@ -7,4 +7,5 @@ class Stack
     key :description, String
     key :published, Boolean
 
+    many :scripts
 end

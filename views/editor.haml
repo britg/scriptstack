@@ -1,10 +1,11 @@
-#create
+#editor
     #sidebar
         - if !@stack.published
             %input#stackPublish{:type=>"button", :value=>"Publish", :disabled=>true}
         - else
             %h4 Public, published Stack!
-            %input{:value => @params[:env]}
+
+        %a.deleteStack{:href=>"/stacks/delete"} Delete
 
     #builder
         - if @stack.title
@@ -13,6 +14,30 @@
         - else
             %h2#stackTitle.unedited Click here to edit this stack's title
 
+        %ul#scriptList
+            - @stack.scripts.each do |script|
+                %li= script.name
+
+        %form#newScript{:action=>"/script/new", :method=>"POST"}
+            %h3 New Script
+
+            %input#uploadInput{:type=>'button', :value=>'Upload a javascript file'}
+
+            %h4 Or, enter a URL to a javascript file
+            %input#urlInput{:type=>'text'}
+
+            %h4 
+                Or, paste javascript
+                %a.revealPaste{:href=>"#"} [+]
+            %textarea#pasteInput
+
+            %input#newScriptSubmit{:type=>'button', :value=>"Submit"}
+
+
 -if @stack.id
     %script
-        var active_stack = Stack(#{@stack.to_json}, true)
+        var active_stack = Stack.bootstrap(#{@stack.to_json});
+
+
+%script{:src => '/js/ajaxupload.js'}
+%script{:src => '/js/editor.js'}
