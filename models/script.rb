@@ -1,11 +1,12 @@
 require 'mongo_mapper'
 
 class Script 
-    include MongoMapper::EmbeddedDocument
+    include MongoMapper::Document
 
     key :name, String
     key :original_size, Integer
     key :minified_size, Integer
     key :content, String
+    key :tags, Array
 
 end

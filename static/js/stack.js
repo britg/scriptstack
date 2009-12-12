@@ -165,6 +165,6 @@ Stack.stack.prototype = {
      * with the properties returned from the upload
      */
     new_script_upload: function (name, data) {
-
+        console.log(arguments);
     }
 };
