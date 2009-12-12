@@ -1,84 +1,67 @@
 /**
- * Namespace for ScriptStack
+ * Namespace for ScriptStack.
+ * Also, returns a new Stack instance on
+ * call.
  */
-var Stack = function(params, no_save) {
-    return new Stack.stack(params, no_save);
+var Stack = function (params) {
+    return new Stack.stack(params);
 };
 
+/**
+ * Bootstrap an existing stack from paramters passed
+ * on page.
+ */
+Stack.bootstrap = function(params) {
+    return new Stack.stack(params, true);
+};
+
+/**
+ * Debugging is enable by default
+ */
 Stack.debug = true;
-Stack.log = function() {
+Stack.log = function () {
     if(Stack.debug) {
         console.log.apply(this, arguments);
     }
 };
 
-Stack.stack = function(params, no_save) {
-    Stack.log(no_save);
-    (no_save ? this.bootstrap(params) : this.update(params));
+/**
+ * The stack can either be created or bootstrapped from existing
+ * data that's appended to the html in a script tag.
+ */
+Stack.stack = function (params, bootstrap) {
+    if(typeof params != 'undefined') {
+        (bootstrap ? this.bootstrap(params) : this.update(params));
+    }
 };
 
 Stack.stack.prototype = {
 
     id: undefined,
     title: "",
-    description: "",
     published: false,
     scripts: [],
-    
-    /**
-     * Enable the publishing of this Stack.  Don't actually
-     * publish, though.
-     */
-    enablePublish: function () {
-        $('#stackPublish').attr('disabled', false)
-            .click(function () {
-                active_stack.publish();
-            });
-    },
 
     /**
-     * Publish the stack and replace the Publish button
-     * with the download sidebar.
+     * Convert this stack into a POSTable object
      */
-    publish: function () {
-        this.published = true;
-        this.persist(function () {
-            window.location = '/stacks/' + active_stack.id;
-        });
-    },
+    serialize: function () {
+        var _this = this;
+        var _stack = {};
+        var props = ['id', 'title', 'published'];
 
-    bootstrap: function(params) {
-        Stack.log('Bootstrapping from', params);
-        this.update(params, true);
-    },
-
-    /**
-     * Update the direct properties of this stack and
-     * persist the data to MongoDB
-     */
-    update: function(params, no_save) {
-        var $this = this;
-        $.each(params, function(field, value) {
-            $this[field] = value;
+        $.each(props, function (i, property) {
+            _stack["stack[" + property + "]"] = _this[property];
         });
 
-        if(typeof no_save == 'undefined') {
-            this.persist();
-        }
-    },
-
-    /**
-     * Update the title and save immediately
-     */
-    update_title: function(title) {
-        this.update({"title":title});
+        return _stack;
     },
 
     /**
      * Persist to db
      */
     persist: function (callback) {
-        var $this = this;
+        var _this = this;
 
         // try to find the id
         if(!this.id) {
@@ -87,23 +70,101 @@ Stack.stack.prototype = {
         }
 
         var endpoint = (this.id ? '/stacks/' + this.id : '/create');
-        var data = {
-            "stack[id]": this.id,
-            "stack[title]": this.title,
-            "stack[description]": this.description,
-            "stack[published]": this.published
-        };
-
-        $.post(endpoint, data, function(resp) {
-            if(!$this.id) {
-                active_stack.id = resp.id;
+        var data = this.serialize();
+            
+        $.post(endpoint, data, function (resp) {
+            if(!_this.id) {
+                _this.id = resp.id;
                 window.location = '#' + resp.id;
-                active_stack.enablePublish();
+                _this.enablePublish();
             }
 
             if(typeof callback == 'function') {
                 callback.apply();
             }
         }, 'json');
+    },
+    
+    /**
+     * Enable the publishing of this Stack.  Don't actually
+     * publish, though.
+     */
+    enablePublish: function () {
+        var _this = this;
+        $('#stackPublish').attr('disabled', false)
+            .click(function () {
+                _this.publish();
+            });
+    },
+
+    /**
+     * Publish the stack and replace the Publish button
+     * with the download sidebar.
+     */
+    publish: function () {
+        var _this = this;
+        this.published = true;
+        this.persist(function () {
+            window.location = '/stacks/' + _this.id;
+        });
+    },
+
+    bootstrap: function (params) {
+        Stack.log('Bootstrapping from', params);
+        this.update(params, true);
+    },
+
+    /**
+     * Update the direct properties of this stack and
+     * persist the data to MongoDB
+     */
+    update: function (params, no_save) {
+        var _this = this;
+        $.each(params, function (field, value) {
+            _this[field] = value;
+        });
+
+        if(typeof no_save == 'undefined') {
+            this.persist();
+        }
+    },
+
+    /**
+     * Shortcut to update title
+     */
+    update_title: function (title) {
+        this.update({"title":title});
+    },
+
+    /**
+     * Destroy this Stack
+     */
+    del: function (cb) {
+        var endpoint = '/stacks/delete';
+        var data = this.serialize();
+
+        $.post(endpoint, data, function () {
+            cb.apply();
+        });
+    },
+
+    /**
+     * Overload new_script by method call
+     */
+    new_script: function (method) {
+        if(typeof this['new_script_' + method] != 'undefined') {
+            return this['new_script_' + method].apply();
+        } else {
+            Stack.log('No script creation method that matches', method);
+        }
+    },
+
+    /**
+     * Use ajaxUpload jQuery plugin to asynchronously upload the file.
+     * If the upload is successful, instantiate a new Stack.script object
+     * with the properties returned from the upload
+     */
+    new_script_upload: function (name, data) {
+
     }
 };
