@@ -6,6 +6,6 @@ class Stack
     key :title, String
     key :description, String
     key :published, Boolean
+    key :scripts, Array
 
-    many :scripts
 end

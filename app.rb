@@ -2,6 +2,7 @@ require 'rubygems'
 require 'compass'
 require 'sinatra'
 require 'haml'
+require 'yui/compressor'
 
 require 'models/mongo'
 require 'models/user'
@@ -28,6 +29,7 @@ end
 
 get '/create' do
     @stack = Stack.new
+    @scripts = []
     haml :editor
 end
 
@@ -41,6 +43,9 @@ end
 
 get '/stacks/:id' do 
     @stack = Stack.find(params[:id])
+    puts 'Stack: ' + @stack.inspect
+    @scripts = Script.find(:all, :id => @stack.scripts)
+    puts @scripts.to_json
     haml :editor
 end
 
@@ -62,6 +67,8 @@ end
 post '/scripts/upload' do
     if params[:stack_id]
         stack = Stack.find(params[:stack_id])
+    else
+        stack = Stack.new
     end
     
     unless params[:userfile] && 
@@ -70,21 +77,26 @@ post '/scripts/upload' do
         return '{"error":"No file selected"}'
     end
 
-    content = ""
-    while blk = tmpfile.read(65536)
-        content << blk.inspect
-    end
+    content = tmpfile.read
 
-    script = Script.new
-    script.name = name
+    # Minify and get size
+    compressor = YUI::JavaScriptCompressor.new
+    compressed = compressor.compress(content)
 
-    if stack
-        stack.scripts << script
-        stack.save
-    end
+    script = Script.new({
+        :name => name,
+        :content => content,
+        :original_size => tmpfile.size,
+        :minified_size => compressed.length
+    })
+    script.save
 
-    script.content = "removed"
+    # Remove script content for json serialization 
+    script.content = ""
 
-    content_type 'application/json', :charset => 'utf-8'
-    script.to_json
+    stack.scripts << script.id
+    stack.save
+
+    content_type 'text/plain', :charset => 'utf-8'
+    "{stack:" + stack.to_json + ", script:" + script.to_json + "}"
 end

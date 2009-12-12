@@ -15,8 +15,12 @@
             %h2#stackTitle.unedited Click here to edit this stack's title
 
         %ul#scriptList
-            - @stack.scripts.each do |script|
-                %li= script.name
+            - @scripts.each do |script|
+                %li
+                    =script.name
+                    =script.original_size/1024
+                    /
+                    =script.minified_size/1024
 
         %form#newScript{:action=>"/script/new", :method=>"POST"}
             %h3 New Script
