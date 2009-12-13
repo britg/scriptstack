@@ -16,18 +16,7 @@
 
         %ul#scriptList
             - @scripts.each do |script|
-                %li.scriptItem{:id => script.id}
-                    .scriptSummary
-                        .scriptHandle |||
-                        .scriptSize
-                            %span.scriptOriginalSize= script.original_size/1024
-                            \/
-                            %span.scriptMinSize= script.minified_size/1024
-                        %span.scriptName= script.name
-                    
-                    .scriptDetail
-                        %a.viewScript{:href=>"/script/#{script.id}"} Source
-                        %a.deleteScript{:href=>"/scripts/delete/#{script.id}"} Remove 
+                = haml(:_script, :layout => false, :locals => {:script => script})
 
 
         #newScriptButton

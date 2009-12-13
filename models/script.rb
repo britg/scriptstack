@@ -8,5 +8,6 @@ class Script
     key :minified_size, Integer
     key :content, String
     key :tags, Array
+    key :stack_id, String
 
 end

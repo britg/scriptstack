@@ -33,7 +33,7 @@ get '/create' do
     haml :editor
 end
 
-post '/create' do 
+post '/create' do
     stack = Stack.new(params[:stack])
     stack.save()
 
@@ -41,7 +41,7 @@ post '/create' do
     stack.to_json
 end
 
-get '/stacks/:id' do 
+get '/stacks/:id' do
     @stack = Stack.find(params[:id])
     puts 'Stack: ' + @stack.inspect
     @scripts = Script.find(:all, :id => @stack.scripts, :fields => "name, original_size, minified_size, tags")
@@ -87,12 +87,14 @@ post '/scripts/upload' do
         :name => name,
         :content => content,
         :original_size => tmpfile.size,
-        :minified_size => compressed.length
+        :minified_size => compressed.length,
+        :stack_id => stack.id
     })
     script.save
 
-    # Remove script content for json serialization 
-    script.content = ""
+    # Remove script content for json serialization and add
+    # the rendered partial
+    script.content = haml :_script, :layout => false, :locals => {:script => script}
 
     stack.scripts << script.id
     stack.save
@@ -105,5 +107,21 @@ get '/scripts/:id' do
     script = Script.find(params[:id])
     content_type 'application/json', :charset => 'utf-8'
     script.to_json
+end
+
+post '/scripts/delete' do
+    script = Script.find(params[:script][:id])
+
+    # remove the script from the list of scripts in the stack
+    stack = Stack.find(script.stack_id)
+    stack.scripts.delete_if do |item|
+        item == script.id
+    end
+
+    stack.save
+    script.destroy
+
+    content_type 'application/json', :charset => 'utf-8'
+    '{"result":"success"}'
 end
 

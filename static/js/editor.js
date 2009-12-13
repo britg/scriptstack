@@ -129,7 +129,7 @@ $(function() {
     /**
      * Open the script on click
      */
-    $('.scriptName').click(function() {
+    $('.scriptName').live('click', function() {
         var li = $(this).parent().parent()
         li.toggleClass('selected');
 
@@ -148,7 +148,7 @@ $(function() {
     /**
      * Delete script
      */
-    $('.deleteScript').click(function() {
+    $('.deleteScript').live('click', function() {
         var cfm = confirm("Remove this script?");
         if(cfm) {
             var scriptId = $(this).attr('href').split('/')[3];
