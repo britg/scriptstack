@@ -41,6 +41,7 @@ Stack.stack.prototype = {
     title: "",
     published: false,
     scripts: [],
+    script_col: {},
 
     /**
      * Convert this stack into a POSTable object
@@ -164,7 +165,25 @@ Stack.stack.prototype = {
      * If the upload is successful, instantiate a new Stack.script object
      * with the properties returned from the upload
      */
-    new_script_upload: function (name, data) {
-        console.log(arguments);
+    new_script_upload: function (data) {
+        var script = new Stack.script(data);
+        script.render();
+    },
+
+    /**
+     * Asynchrously get a script from the script collection
+     * or from the server if it doesn't exist
+     */
+    get_script: function (id, cb) {
+        var _this = this;
+        if(typeof this.script_col[id] == 'undefined') {
+            $.getJSON('/scripts/' + id, function(resp) {
+                var script = new Stack.script(resp);
+                _this.script_col[id] = script;
+                cb.apply(_this, [script]);
+            });
+        } else {
+            cb.apply(_this, [_this.script_col[id]]);
+        }
     }
 };
