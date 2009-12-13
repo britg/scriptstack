@@ -44,7 +44,7 @@ end
 get '/stacks/:id' do 
     @stack = Stack.find(params[:id])
     puts 'Stack: ' + @stack.inspect
-    @scripts = Script.find(:all, :id => @stack.scripts)
+    @scripts = Script.find(:all, :id => @stack.scripts, :fields => "name, original_size, minified_size, tags")
     puts @scripts.to_json
     haml :editor
 end
@@ -100,3 +100,10 @@ post '/scripts/upload' do
     content_type 'text/plain', :charset => 'utf-8'
     "{stack:" + stack.to_json + ", script:" + script.to_json + "}"
 end
+
+get '/scripts/:id' do
+    script = Script.find(params[:id])
+    content_type 'application/json', :charset => 'utf-8'
+    script.to_json
+end
+

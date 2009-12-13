@@ -53,6 +53,16 @@ $(function() {
         return false;
     });
 
+    $('#newScriptButton').click(function () {
+        $(this).hide();
+        $('#newScript').show();
+    });
+
+    $('#newScriptCancel').click(function () {
+        $('#newScript').hide();
+        $('#newScriptButton').show();
+    });
+
     /**
      * Create a new AjaxUpload instance and bind it to the upload button
      */
@@ -69,7 +79,7 @@ $(function() {
             }
         },
         onComplete: function (name, resp) {
-            active_stack.new_script_upload(name, resp);
+            active_stack.new_script_upload(resp.script);
         }
     });
 
@@ -102,6 +112,54 @@ $(function() {
         }
 
         active_stack.new_script(method);
+
+        $('#newScriptButton').show();
+        $('#newScript').hide();
+
+    });
+
+    /**
+     * Scripts are sortable
+     */
+    $('#scriptList').sortable({
+        containment: 'parent',
+        handle:'.scriptHandle'
+    });
+
+    /**
+     * Open the script on click
+     */
+    $('.scriptName').click(function() {
+        var li = $(this).parent().parent()
+        li.toggleClass('selected');
+
+        var detail = li.find('.scriptDetail');
+        detail.toggle();
+    });
+
+    /**
+     * Syntax highlighting
+     */
+    $.beautyOfCode.init({
+        brushes: ['JScript']
+    });
+
+
+    /**
+     * Delete script
+     */
+    $('.deleteScript').click(function() {
+        var cfm = confirm("Remove this script?");
+        if(cfm) {
+            var scriptId = $(this).attr('href').split('/')[3];
+            active_stack.get_script(scriptId, function(script) {
+                script.del(function() {
+                    $('#' + scriptId).remove();
+                });
+            });
+        }
+
+        return  false;
     });
 
 });

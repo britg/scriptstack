@@ -16,14 +16,26 @@
 
         %ul#scriptList
             - @scripts.each do |script|
-                %li
-                    =script.name
-                    =script.original_size/1024
-                    /
-                    =script.minified_size/1024
+                %li.scriptItem{:id => script.id}
+                    .scriptSummary
+                        .scriptHandle |||
+                        .scriptSize
+                            %span.scriptOriginalSize= script.original_size/1024
+                            \/
+                            %span.scriptMinSize= script.minified_size/1024
+                        %span.scriptName= script.name
+                    
+                    .scriptDetail
+                        %a.viewScript{:href=>"/script/#{script.id}"} Source
+                        %a.deleteScript{:href=>"/scripts/delete/#{script.id}"} Remove 
+
+
+        #newScriptButton
+            %span.newScriptPlus +
+            Add script
 
         %form#newScript{:action=>"/script/new", :method=>"POST"}
-            %h3 New Script
+            %h3 Add Script
 
             %input#uploadInput{:type=>'button', :value=>'Upload a javascript file'}
 
@@ -36,6 +48,7 @@
             %textarea#pasteInput
 
             %input#newScriptSubmit{:type=>'button', :value=>"Submit"}
+            %input#newScriptCancel{:type=>'button', :value=>"Cancel"}
 
 
 -if @stack.id
@@ -43,5 +56,6 @@
         var active_stack = Stack.bootstrap(#{@stack.to_json});
 
 
+%script{:src => '/js/jquery.beautyOfCode.js'}
 %script{:src => '/js/ajaxupload.js'}
 %script{:src => '/js/editor.js'}
