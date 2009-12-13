@@ -16,7 +16,7 @@
                     %td.scriptEditField
                         Filename 
                     %td
-                        %input.scriptNameEdit{:type=>:text, :value => script.name}
+                        %input.scriptNameEdit{:id=>"nameEdit-#{script.id}",:type=>:text, :value => script.name}
                 %tr
                     %td.scriptEditField
                         Tags 

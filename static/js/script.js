@@ -53,6 +53,20 @@ Stack.script.prototype = {
         }, 'json');
     },
 
+    update_name: function (name) {
+        var _this = this;
+        var endpoint = '/scripts/name';
+        var data = {
+            "script[id]": this.id,
+            "script[name]": name
+        };
+        $.post(endpoint, data, function (resp) {
+            var filename = $('#' + _this.id).find('.scriptName');
+            filename.html(resp.name);
+        }, 'json');
+
+    },
+
     del: function (cb) {
         var endpoint = '/scripts/delete';
         var data = this.serialize();

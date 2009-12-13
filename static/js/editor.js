@@ -166,6 +166,18 @@ $(function() {
     });
 
     /**
+     * Filename field edit
+     */
+    $('.scriptNameEdit').live('change', function () {
+        var scriptId = $(this).attr('id').split('-')[1];
+        var filename = $(this).val();
+
+        active_stack.get_script(scriptId, function (script) {
+            script.update_name(filename);
+        });
+    });
+
+    /**
      * Tag edit field
      */
     $('.scriptTagsEdit').live('change', function () {

@@ -124,6 +124,17 @@ post '/scripts/tags' do
     script.to_json
 end
 
+post '/scripts/name' do
+    script_id = params[:script][:id]
+    name = params[:script][:name]
+
+    script = Script.find(script_id)
+    script.name = name.strip.gsub(/<\/?[^>]*>/, '')
+    script.save
+    content_type 'application/json', :charset => 'utf-8'
+    script.to_json
+end
+
 post '/scripts/delete' do
     script = Script.find(params[:script][:id])
 
