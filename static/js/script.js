@@ -20,6 +20,28 @@ Stack.script.prototype = {
     },
 
     render: function () {
-        $('#scriptList').append('<li id="' + this.id + '" class="scriptItem"><div class="scriptSummary"> <div class="scriptHandle">|||</div> <div class="scriptSize"> <span class="scriptOriginalSize">' + Math.round(this.original_size/1024) + '</span> / <span class="scriptMinSize">' + Math.round(this.minified_size/1024) + '</span> </div> <span class="scriptName">' + this.name + '</span> </div></li>');
+        $('#scriptList').append(this.content);
+    },
+
+    serialize: function () {
+        var _this = this;
+        var _script = {};
+        var props = ['id', 'name', 'original_size', 'minified_size'];
+
+        $.each(props, function (i, property) {
+            _script["script[" + property + "]"] = _this[property];
+        });
+
+        return _script;
+    },
+
+    del: function (cb) {
+        var endpoint = '/scripts/delete';
+        var data = this.serialize();
+
+        $.post(endpoint, data, function () {
+            cb.apply();
+        });
     }
+
 };
