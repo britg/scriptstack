@@ -136,19 +136,16 @@ body.bp
                     :padding 0
                     :margin-bottom 20px
 
-                    li.scriptItem.selected
-                        &:hover
-                            :background #fff
-
                     li.scriptItem
                         :list-style-type none
-                        :border #d5d5d5 solid 1px
+                        :border solid 1px
+                        border-color= !grey_border
                         :margin-bottom -1px
                         :padding 7px 5px
-                        :background #f5f5f5
+                        background= !grey_bg
 
                         &:hover
-                            :background #8FD401
+                            :background #fff
 
                         .scriptSummary
 
@@ -199,13 +196,14 @@ body.bp
                                 :width 75%
 
                 #newScriptButton
-                    :border #d5d5d5 solid 1px
+                    :border solid 1px
+                    border-color= !grey_border
                     :padding 7px 5px
-                    :background #f5f5f5
+                    background= !grey_bg
                     :cursor pointer
 
                     &:hover
-                        :background #8FD401
+                        background= !green
 
                     .newScriptPlus
                         :color #ccc

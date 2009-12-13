@@ -6,6 +6,9 @@ $(function() {
      * not already.
      */
     $('#stackTitle').editable(function (value, props) {
+        // scrub value of any tags
+        value = $.stripTags(value);
+
         // Remove unedited flag
         $(this).removeClass('unedited');
 
@@ -168,8 +171,10 @@ $(function() {
     $('.scriptTagsEdit').live('change', function () {
         var scriptId = $(this).attr('id').split('-')[1];
         var tags = $(this).val();
-        var li = $('#' + scriptId);
-        li.find('.scriptTags').html(tags)
+
+        active_stack.get_script(scriptId, function (script) {
+            script.update_tags(tags);
+        });
     });
 
 });

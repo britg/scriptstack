@@ -1,3 +1,33 @@
+jQuery.stripTags = function(str) { return str.replace(/<\/?[^>]+>/gi, '');  };
+
+/**
+ * This probably doesn't belong here
+ */
+$(function () {
+    $.extend($.gritter.options, {
+        fade_in_speed: 200
+    });
+
+    $(document).ajaxSend(function () {
+        if(typeof window.current_gritter_id == 'undefined') {
+            window.current_gritter_id = $.gritter.add({
+                "title": "Working...",
+                "text":"work, work"
+            });
+        }
+    });
+
+    $(document).ajaxComplete(function () {
+        if(typeof window.current_gritter_id != 'undefined') {
+            $.gritter.remove(window.current_gritter_id, {
+                fade:true,
+                speed:'fast'
+            });
+            delete window.current_gritter_id;
+        }
+    });
+});
+
 /**
  * Namespace for ScriptStack.
  * Also, returns a new Stack instance on

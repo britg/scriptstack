@@ -35,6 +35,24 @@ Stack.script.prototype = {
         return _script;
     },
 
+    update_tags: function (tags) {
+        var _this = this;
+        var tagsArr = tags.split(',');
+        $.each(tagsArr, function (i, v) {
+            tagsArr[i] = $.trim($.stripTags(v));
+        });
+
+        var endpoint = '/scripts/tags';
+        var data = {
+            "script[id]": this.id,
+            "script[tags]": tagsArr.join(',')
+        }
+        $.post(endpoint, data, function (resp) {
+            var tagField = $('#' + _this.id).find('.scriptTags');
+            tagField.html(resp.tags.join(', '));
+        }, 'json');
+    },
+
     del: function (cb) {
         var endpoint = '/scripts/delete';
         var data = this.serialize();

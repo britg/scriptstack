@@ -58,6 +58,7 @@ post '/stacks/delete' do
 end
 
 post '/stacks/:id' do
+    params[:stack][:title] = params[:stack][:title].gsub(/<\/?[^>]*>/, '')
     stack = Stack.update(params[:id] => params[:stack])
     
     content_type 'application/json', :charset => 'utf-8'
@@ -109,6 +110,20 @@ get '/scripts/:id' do
     script.to_json
 end
 
+post '/scripts/tags' do
+    script_id = params[:script][:id]
+    tagstr = params[:script][:tags]
+
+    script = Script.find(script_id)
+    script.tags = tagstr.split(',').map do |tag|
+        tag.strip.gsub(/<\/?[^>]*>/, '')
+    end
+
+    script.save
+    content_type 'application/json', :charset => 'utf-8'
+    script.to_json
+end
+
 post '/scripts/delete' do
     script = Script.find(params[:script][:id])
 
@@ -124,4 +139,3 @@ post '/scripts/delete' do
     content_type 'application/json', :charset => 'utf-8'
     '{"result":"success"}'
 end
-
