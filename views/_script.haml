@@ -7,7 +7,21 @@
             %span.scriptOriginalSize #{script.original_size/1024}
             kb
         %span.scriptName= script.name
+        %span.scriptTags
     
     .scriptDetail
+        %table
+            %tbody
+                %tr
+                    %td.scriptEditField
+                        Filename 
+                    %td
+                        %input.scriptNameEdit{:type=>:text, :value => script.name}
+                %tr
+                    %td.scriptEditField
+                        Tags 
+                    %td
+                        %input.scriptTagsEdit{:id=>"tagsEdit-#{script.id}", :type=>:text, :value => script.tags.join(',')}
+
         %a.viewScript{:href=>"/script/#{script.id}"} Source
         %a.deleteScript{:href=>"/scripts/delete/#{script.id}"} Remove 
