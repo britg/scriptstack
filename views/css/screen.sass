@@ -23,6 +23,10 @@ body.bp
 form.bp
     +blueprint-form
 
+form.editing
+    input
+        +textinput
+
 body.bp
     :font-size 90%
     :line-height 1.1
@@ -132,11 +136,11 @@ body.bp
                     :padding 0
                     :margin-bottom 20px
 
-                    li.selected
+                    li.scriptItem.selected
                         &:hover
                             :background #fff
 
-                    li
+                    li.scriptItem
                         :list-style-type none
                         :border #d5d5d5 solid 1px
                         :margin-bottom -1px
@@ -151,6 +155,11 @@ body.bp
                             .scriptName
                                 :font-size 125%
                                 :cursor pointer
+                                :margin-right 20px
+                            
+                            .scriptTags
+                                :font-size 90%
+                                :color #bbb
 
                             .scriptSize
                                 :float right
@@ -176,6 +185,18 @@ body.bp
                             :margin-top 10px
                             :padding-left 20px
                             :display none
+
+                            .scriptEditField
+                                :width 50px
+                                :text-align right
+
+                            .scriptNameEdit
+                                +textinput
+                                :width 250px
+
+                            .scriptTagsEdit
+                                +textinput
+                                :width 75%
 
                 #newScriptButton
                     :border #d5d5d5 solid 1px

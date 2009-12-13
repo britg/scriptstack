@@ -162,4 +162,14 @@ $(function() {
         return  false;
     });
 
+    /**
+     * Tag edit field
+     */
+    $('.scriptTagsEdit').live('change', function () {
+        var scriptId = $(this).attr('id').split('-')[1];
+        var tags = $(this).val();
+        var li = $('#' + scriptId);
+        li.find('.scriptTags').html(tags)
+    });
+
 });
