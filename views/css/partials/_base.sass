@@ -9,6 +9,11 @@
 
 !blueprint_liquid_container_width = 96%
 
+//Colors
+!green = #8FD401
+!grey_bg = #f5f5f5
+!grey_border = #d5d5d5
+
 =container
     min-width= !blueprint_liquid_container_min_width
     width= !blueprint_liquid_container_width 
@@ -17,10 +22,12 @@
     :text-align left
 
 =textinput
-    :border #d5d5d5 solid 1px
+    :border solid 1px
+    border-color= !grey_border
     :padding 5px 5px
-    :background #f5f5f5
+    background= !grey_bg
 
     &:focus
         :background #f3f5f9
-        :border solid 1px #8FD401
+        :border solid 1px
+        border-color= !green

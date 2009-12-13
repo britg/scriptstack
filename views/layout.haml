@@ -8,8 +8,10 @@
         /[if IE]
             %link{:type=>'text/css', :rel=>'stylesheet', :href=>'/css/ie.css', :media => 'screen, projection'}
 
-        -#%script{:src => 'http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.js'}
-        %script{:src => '/js/jquery-1.4a1.js'}
+        %link{:type=>'text/css', :rel=>'stylesheet', :href=>'/gritter/jquery.gritter.css', :media => 'screen, projection'}
+
+        %script{:src => 'http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.js'}
+        -#%script{:src => '/js/jquery-1.4a1.js'}
 
         %script{:src => '/js/ui.core.js'}
         %script{:src => '/js/ui.tabs.js'}
@@ -17,6 +19,7 @@
         %script{:src => '/js/ui.sortable.js'}
 
         %script{:src => '/js/jquery.jeditable.js'}
+        %script{:src => '/js/jquery.gritter.js'}
 
         -#%script{:src => '/js/jquery.qtip-1.0.0-rc3.js'}
         -#%script{:src => '/js/jquery.qtip-unstable.js'}
