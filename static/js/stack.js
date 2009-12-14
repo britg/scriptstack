@@ -82,7 +82,9 @@ Stack.stack.prototype = {
         var props = ['id', 'title', 'published'];
 
         $.each(props, function (i, property) {
-            _stack["stack[" + property + "]"] = _this[property];
+            if(typeof _this[property] != 'undefined') {
+                _stack["stack[" + property + "]"] = _this[property];
+            }
         });
 
         return _stack;
@@ -198,6 +200,7 @@ Stack.stack.prototype = {
     new_script_upload: function (data) {
         var script = new Stack.script(data);
         script.render();
+        this.update_summary();
     },
 
     /**
@@ -215,5 +218,49 @@ Stack.stack.prototype = {
         } else {
             cb.apply(_this, [_this.script_col[id]]);
         }
+    },
+
+    /**
+     * Submit the script order on sort change
+     */
+    sort: function () {
+        var _this = this;
+        _this.scripts = [];
+
+        $('#scriptList').find('li').each(function (i, li) {
+            _this.scripts.push($(li).attr('id'));
+        });
+
+        var endpoint = '/stacks/sort';
+        var data = {
+            "stack[id]":this.id,
+            "stack[scripts]":this.scripts.join(',')
+        };
+
+        $.post(endpoint, data, function (resp) {
+            Stack.log(resp);
+        });
+        
+        Stack.log(_this.scripts);
+    },
+
+    /**
+     * Update the number of scripts and the total sizes
+     */
+    update_summary: function () {
+        var num_scripts = $('#scriptList').find('li').length;
+        var original_size = 0, minified_size = 0;
+        
+        $('.scriptMinActual').each(function (i, v) {
+            minified_size += Number($(v).val())/1024
+        });
+
+        $('.scriptOriginalActual').each(function(i, v) {
+            original_size += Number($(v).val())/1024
+        });
+
+        $('#numScripts').html(num_scripts);
+        $('.stackMinSize').html(Math.round(minified_size));
+        $('.stackOriginalSize').html(Math.round(original_size));
     }
 };
