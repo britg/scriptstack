@@ -2,6 +2,8 @@
     .scriptSummary
         .scriptHandle |||
         .scriptSize
+            %input.scriptMinActual{:type=>:hidden, :value=>script.minified_size}
+            %input.scriptOriginalActual{:type=>:hidden, :value=>script.original_size}
             %span.scriptMinSize= script.minified_size/1024
             \/
             %span.scriptOriginalSize #{script.original_size/1024}

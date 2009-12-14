@@ -14,6 +14,16 @@
         - else
             %h2#stackTitle.unedited Click here to edit this stack's title
 
+        #stackSummary
+            -if @stack.original_size && @stack.minified_size
+                #stackSize
+                    %span.stackMinSize= @stack.minified_size/1024
+                    \/
+                    %span.stackOriginalSize #{@stack.original_size/1024}
+                    kb
+                %span#numScripts #{@scripts.size}
+                scripts
+
         %ul#scriptList
             - @scripts.each do |script|
                 = haml(:_script, :layout => false, :locals => {:script => script})

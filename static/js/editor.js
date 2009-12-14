@@ -126,7 +126,10 @@ $(function() {
      */
     $('#scriptList').sortable({
         containment: 'parent',
-        handle:'.scriptHandle'
+        handle:'.scriptHandle',
+        update: function () {
+            active_stack.sort();
+        }
     });
 
     /**
@@ -158,6 +161,7 @@ $(function() {
             active_stack.get_script(scriptId, function(script) {
                 script.del(function() {
                     $('#' + scriptId).remove();
+                    active_stack.update_summary();
                 });
             });
         }

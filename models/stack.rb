@@ -7,5 +7,7 @@ class Stack
     key :description, String
     key :published, Boolean
     key :scripts, Array
+    key :original_size, Integer, :default => 0
+    key :minified_size, Integer, :default => 0
 
 end

@@ -3,6 +3,7 @@ require 'compass'
 require 'sinatra'
 require 'haml'
 require 'yui/compressor'
+require 'mongo'
 
 require 'models/mongo'
 require 'models/user'
@@ -44,7 +45,10 @@ end
 get '/stacks/:id' do
     @stack = Stack.find(params[:id])
     puts 'Stack: ' + @stack.inspect
-    @scripts = Script.find(:all, :id => @stack.scripts, :fields => "name, original_size, minified_size, tags")
+    @scripts = []
+    @stack.scripts.each do |script_id|
+        @scripts.push Script.find(script_id, :fields => "name, tags, original_size, minified_size")
+    end
     puts @scripts.to_json
     haml :editor
 end
@@ -55,6 +59,22 @@ post '/stacks/delete' do
     stack.destroy
     content_type 'application/json', :charset => 'utf-8'
     '{"result":"success"}'
+end
+
+post '/stacks/sort' do
+    scripts = params[:stack][:scripts].split(',').map do |str|
+        Mongo::ObjectID.from_string(str)
+    end
+
+    puts "Scripts to sort" + scripts.inspect
+    stack = Stack.find(params[:stack][:id])
+    puts "Stack before sort" + stack.scripts.inspect
+    stack.scripts = scripts
+    puts "Stack after sort" + stack.scripts.inspect
+
+    stack.save
+    content_type 'application/json', :charset => 'utf-8'
+    '{"result":"complete"}'
 end
 
 post '/stacks/:id' do
@@ -98,6 +118,8 @@ post '/scripts/upload' do
     script.content = haml :_script, :layout => false, :locals => {:script => script}
 
     stack.scripts << script.id
+    stack.original_size += script.original_size
+    stack.minified_size += script.minified_size
     stack.save
 
     content_type 'text/plain', :charset => 'utf-8'
@@ -143,6 +165,9 @@ post '/scripts/delete' do
     stack.scripts.delete_if do |item|
         item == script.id
     end
+
+    stack.original_size -= script.original_size
+    stack.minified_size -= script.minified_size
 
     stack.save
     script.destroy
