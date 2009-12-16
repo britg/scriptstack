@@ -144,14 +144,6 @@ $(function() {
     });
 
     /**
-     * Syntax highlighting
-     */
-    $.beautyOfCode.init({
-        brushes: ['JScript']
-    });
-
-
-    /**
      * Delete script
      */
     $('.deleteScript').live('click', function() {
