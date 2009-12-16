@@ -239,8 +239,37 @@ body.bp
                     :display none
                     background= !lightgreen
                     :border solid 1px
-                    border-color= !green
-                    :padding 10px
+                    border-color= !grey_border
+                    :padding 20px
+
+                    h3.or
+                        :margin 10px 0
+
+
+                    #uploadInput
+                        +rounded
+                        :float left
+                        background= !green
+                        :color #fff
+                        :border solid 1px
+                        :padding 10px
+                        :margin 0 10px 0 0
+                        :font-size 110%
+                        :font-weight bold
+                        :cursor pointer
+                        border-color= !green
+
+                    #urlInput
+                        +textinput
+                        :font-size 110%
+                        :width 90%
+                        :background #fff
 
                     #pasteInput
-                        :display none
+                        +textinput
+                        :width 90%
+                        :margin-bottom 20px
+                        :background #fff
+
+                    #newScriptSubmit, #newScriptCancel
+                        :font-size 110%

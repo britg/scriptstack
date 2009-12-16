@@ -59,6 +59,14 @@ $(function() {
     $('#newScriptButton').click(function () {
         $(this).hide();
         $('#newScript').show();
+        $('#urlInput').val($('#urlInput').attr('title'));
+        $('#pasteInput').val($('#pasteInput').attr('title'));
+    });
+
+    $('#urlInput, #pasteInput').focus(function () {
+        if($(this).attr('title') == $(this).val()) {
+            $(this).val('');
+        }
     });
 
     $('#newScriptCancel').click(function () {
