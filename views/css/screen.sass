@@ -226,7 +226,8 @@ body.bp
                     :cursor pointer
 
                     &:hover
-                        background= !green
+                        background= !lightgreen
+                        border-color= !green
 
                     .newScriptPlus
                         :color #ccc
@@ -236,6 +237,10 @@ body.bp
                     
                 #newScript
                     :display none
+                    background= !lightgreen
+                    :border solid 1px
+                    border-color= !green
+                    :padding 10px
 
                     #pasteInput
                         :display none

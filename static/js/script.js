@@ -119,5 +119,4 @@ Stack.script.prototype = {
         var li = $('#' + this.id);
         li.find('.scriptCode').hide();
     }
-
 };

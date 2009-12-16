@@ -200,6 +200,8 @@ Stack.stack.prototype = {
     new_script_upload: function (data) {
         var script = new Stack.script(data);
         script.render();
+        $('#newScriptCancel').click();
+        $('#' + script.id).find('.scriptName').click();
         this.update_summary();
     },
 
