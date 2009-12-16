@@ -12,6 +12,7 @@
         %span.scriptTags= script.tags.join(', ')
     
     .scriptDetail
+        %a.deleteScript{:href=>"/scripts/delete/#{script.id}"} Remove 
         %table
             %tbody
                 %tr
@@ -28,7 +29,6 @@
                     %td.scriptEditField
                     %td
                         %a.viewScript{:href=>"/script/#{script.id}"} Code 
-                        %a.deleteScript{:href=>"/scripts/delete/#{script.id}"} Remove 
         .scriptCode
             %pre.code
                 %code.javascript
