@@ -34,17 +34,19 @@
             Add script
 
         %form#newScript{:action=>"/script/new", :method=>"POST"}
-            %h3 Add Script
 
-            %input#uploadInput{:type=>'button', :value=>'Upload a javascript file'}
+            %h3 New Script
+            %p#uploadInputWrap
+                %input#uploadInput{:type=>'button', :value=>'Click here to Upload'}
+                %strong Note: 
+                Only unminified javascript (*.js) files should be uploaded.<br />  We'll take care of the minification for you!
 
-            %h4 Or, enter a URL to a javascript file
-            %input#urlInput{:type=>'text'}
+            .clear
+            %h3.or -or-
+            %input#urlInput{:type=>'text', :title=>'Enter a URL to an unminified javascript (*.js) file here.'}
 
-            %h4 
-                Or, paste javascript
-                %a.revealPaste{:href=>"#"} [+]
-            %textarea#pasteInput
+            %h3.or -or-
+            %textarea#pasteInput{:title=> 'Paste your unminified script here.'}
 
             %input#newScriptSubmit{:type=>'button', :value=>"Submit"}
             %input#newScriptCancel{:type=>'button', :value=>"Cancel"}
