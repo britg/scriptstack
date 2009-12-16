@@ -185,4 +185,17 @@ $(function() {
         });
     });
 
+    /**
+     * View code
+     */
+    $('.viewScript').live('click', function () {
+        var scriptId = $(this).attr('href').split('/')[2];
+        var li = $('#' + scriptId);
+
+        active_stack.get_script(scriptId, function (script) {
+            script.toggle_code();
+        });
+        return false;
+    });
+
 });
