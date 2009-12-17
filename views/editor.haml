@@ -63,12 +63,12 @@
                 %strong Note: 
                 Only unminified javascript (*.js) files should be uploaded.<br />  We'll take care of the minification for you!
 
-            .clear
-            %h3.or -or-
-            %input#urlInput{:type=>'text', :title=>'Enter a URL to an unminified javascript (*.js) file here.'}
+            -#.clear
+            -#%h3.or -or-
+            -#%input#urlInput{:type=>'text', :title=>'Enter a URL to an unminified javascript (*.js) file here.'}
 
-            %h3.or -or-
-            %textarea#pasteInput{:title=> 'Paste your unminified script here.'}
+            -#%h3.or -or-
+            -#%textarea#pasteInput{:title=> 'Paste your unminified script here.'}
 
             %input#newScriptSubmit{:type=>'button', :value=>"Submit"}
             %input#newScriptCancel{:type=>'button', :value=>"Cancel"}
