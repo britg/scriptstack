@@ -42,7 +42,7 @@ Stack.bootstrap = function(params) {
 Stack.debug = true;
 Stack.log = function () {
     if(Stack.debug) {
-        console.log.apply(this, arguments);
+        console.log.apply(console, arguments);
     }
 };
 
