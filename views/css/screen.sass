@@ -123,6 +123,38 @@ body.bp
                 :right 2%
                 :top 60px
 
+                #download
+                    
+                    .dl
+                        :display block
+                        +rounded
+                        :background url(/images/script_code_red.png) 20px center no-repeat
+                        :background-color= !lightgreen
+                        :border solid 1px 
+                        :border-color= !grey_border
+                        :font-size 110%
+                        :font-weight bold
+                        :text-decoration none
+                        :color #272727
+                        :padding 10px
+                        :padding-left 40px
+                        :margin 10px
+
+                        &#minified
+                            :background url(/images/script_code.png) 20px center no-repeat
+                            :background-color= !green
+
+                        .desc
+                            :font-weight normal
+                            :font-size 75%
+                            :color #575757
+
+                            .stackOriginalSize, .stackMinSize
+                                :font-weight bold
+                                :color #272727
+
+
+
             #builder
                 :margin-right 310px
 

@@ -1,14 +1,23 @@
 #editor
     #sidebar
+        %h2 &nbsp;
         - if !@stack.published
             %input#stackPublish{:type=>"button", :value=>"Publish", :disabled=>true}
         - else
             #download
-                %a{:href=>"/stacks/#{@stack.id}.js"} Download (unminified)
-                %a{:href=>"/stacks/#{@stack.id}.min.js"} Download (minified)
+                %a#minified.dl{:href=>"/stacks/#{@stack.id}.min.js"}
+                    Download 
+                    %span.desc 
+                        (concat min:
+                        %span.stackMinSize #{@stack.minified_size/1024}
+                        kb)
 
-            #modified= @stack.last_build_time
-
+                %a#raw.dl{:href=>"/stacks/#{@stack.id}.js"} 
+                    Download 
+                    %span.desc 
+                        (concat raw:
+                        %span.stackOriginalSize #{@stack.original_size/1024} 
+                        kb)
 
     #builder
         - if @stack.title
