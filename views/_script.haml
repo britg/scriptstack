@@ -25,6 +25,12 @@
                         Tags 
                     %td
                         %input.scriptTagsEdit{:id=>"tagsEdit-#{script.id}", :type=>:text, :value => script.tags.join(', ')}
+                %tr
+                    %td.scriptEditField
+                        
+                    %td
+                        %input.saveScript{:id=>"tagsEdit-#{script.id}", :type=>:button, :value => 'Ok'}
+
 
         %a.viewScript{:href=>"/script/#{script.id}"} 
             Toggle script source 

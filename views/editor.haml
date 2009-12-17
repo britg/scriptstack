@@ -1,7 +1,7 @@
 #editor
     #sidebar
         - if !@stack.published
-            %input#stackPublish{:type=>"button", :value=>"Publish", :disabled=>true}
+            %a#stackPublish{:href=>'/stacks/publish'} Publish
         - else
             #download
                 %h4 Download this Stack:
