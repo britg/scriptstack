@@ -1,6 +1,16 @@
 $(function() {
 
     /**
+     * Gritter settings
+     */
+    $.extend($.gritter.options, {
+        fade_in_speed: 200
+    });
+
+    $(document).ajaxSend(Stack.working);
+    $(document).ajaxComplete(Stack.doneWorking);
+
+    /**
      * Stack title is editable.
      * On edit, make this stack publishable if it is
      * not already.
@@ -81,6 +91,7 @@ $(function() {
         action:"/scripts/upload",
         responseType:'json',
         onSubmit: function () {
+            Stack.working();
             if(typeof active_stack == 'undefined') {
                 window.active_stack = Stack();
             } else {
@@ -90,6 +101,7 @@ $(function() {
             }
         },
         onComplete: function (name, resp) {
+            Stack.doneWorking();
             active_stack.new_script_upload(resp.script);
         }
     });

@@ -1,40 +1,31 @@
 jQuery.stripTags = function(str) { return str.replace(/<\/?[^>]+>/gi, '');  };
 
 /**
- * This probably doesn't belong here
- */
-$(function () {
-    $.extend($.gritter.options, {
-        fade_in_speed: 200
-    });
-
-    $(document).ajaxSend(function () {
-        if(typeof window.current_gritter_id == 'undefined') {
-            window.current_gritter_id = $.gritter.add({
-                "title": "Working...",
-                "text":"work, work"
-            });
-        }
-    });
-
-    $(document).ajaxComplete(function () {
-        if(typeof window.current_gritter_id != 'undefined') {
-            $.gritter.remove(window.current_gritter_id, {
-                fade:true,
-                speed:'fast'
-            });
-            delete window.current_gritter_id;
-        }
-    });
-});
-
-/**
  * Namespace for ScriptStack.
  * Also, returns a new Stack instance on
  * call.
  */
 var Stack = function (params) {
     return new Stack.stack(params);
+};
+
+Stack.working = function () {
+    if(typeof window.current_gritter_id == 'undefined') {
+        window.current_gritter_id = $.gritter.add({
+            "title": "Working...",
+            "text":"work, work"
+        });
+    }
+};
+
+Stack.doneWorking = function () {
+    if(typeof window.current_gritter_id != 'undefined') {
+        $.gritter.remove(window.current_gritter_id, {
+            fade:true,
+            speed:'fast'
+        });
+        delete window.current_gritter_id;
+    }
 };
 
 /**
@@ -201,7 +192,6 @@ Stack.stack.prototype = {
         var script = new Stack.script(data);
         script.render();
         $('#newScriptCancel').click();
-        $('#' + script.id).find('.scriptName').click();
         this.update_summary();
     },
 
