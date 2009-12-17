@@ -116,7 +116,7 @@ Stack.stack.prototype = {
      */
     enablePublish: function () {
         this.publishable = true;
-        $('#stackPublish').fadeIn();
+        $('#publishWrap').fadeIn();
     },
 
     /**

@@ -15,7 +15,11 @@
 
         #splashRight
             #splashRightInner
-                %a{:href=>"/create"} Create a stack
+                .createButton
+                    %a{:href=>"/create"} 
+                        Click here to create a stack
+                        %br
+                        %span.small (no account required)
 
                 %ul
                     - @stacks.each do |stack|

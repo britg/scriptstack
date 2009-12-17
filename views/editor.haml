@@ -1,7 +1,17 @@
 #editor
     #sidebar
         - if !@stack.published
-            %a#stackPublish{:href=>'/stacks/publish'} Publish
+            %h4 Getting Started
+            %ol
+                %li Add a title to this stack.
+                %li Add a script or two. 
+                %li Click and drag the scripts to the same order they should be loaded in the browser.
+
+            #publishWrap
+                %h4 Ready?
+                %p Hit publish below.  Don't worry, you'll have all the same editing options once published.
+                %a#stackPublish{:href=>'/stacks/publish'} Publish
+
         - else
             #download
                 %h4 Download this Stack:
