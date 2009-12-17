@@ -143,8 +143,8 @@ $(function() {
     /**
      * Open the script on click
      */
-    $('.scriptName').live('click', function() {
-        var li = $(this).parent().parent()
+    $('.scriptSummary').live('click', function() {
+        var li = $(this).parent();
         li.toggleClass('selected');
 
         var detail = li.find('.scriptDetail');

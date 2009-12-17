@@ -109,14 +109,15 @@ Stack.script.prototype = {
             }
 
             pre.beautifyCode('javascript');
-            li.find('.scriptCode').show();
-        } else {
-            li.find('.scriptCode').show();
         }
+
+        li.find('.scriptCode').show();
+        li.find('.viewScriptToggle').html('&#9650');
     },
 
     hide_code: function () {
         var li = $('#' + this.id);
         li.find('.scriptCode').hide();
+        li.find('.viewScriptToggle').html('&#9660');
     }
 };
