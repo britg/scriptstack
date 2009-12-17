@@ -3,9 +3,12 @@
         - if !@stack.published
             %input#stackPublish{:type=>"button", :value=>"Publish", :disabled=>true}
         - else
-            %h4 Public, published Stack!
+            #download
+                %a{:href=>"/stacks/#{@stack.id}.js"} Download (unminified)
+                %a{:href=>"/stacks/#{@stack.id}.min.js"} Download (minified)
 
-        %a.deleteStack{:href=>"/stacks/delete"} Delete
+            #modified= @stack.last_build_time
+
 
     #builder
         - if @stack.title
@@ -37,7 +40,7 @@
 
             %h3 New Script
             %p#uploadInputWrap
-                %input#uploadInput{:type=>'button', :value=>'Click here to Upload'}
+                %input#uploadInput{:type=>'button', :value=>'Choose a file'}
                 %strong Note: 
                 Only unminified javascript (*.js) files should be uploaded.<br />  We'll take care of the minification for you!
 

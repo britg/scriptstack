@@ -1,6 +1,6 @@
 %li.scriptItem{:id => script.id}
+    .scriptHandle |||
     .scriptSummary
-        .scriptHandle |||
         .scriptSize
             %input.scriptMinActual{:type=>:hidden, :value=>script.minified_size}
             %input.scriptOriginalActual{:type=>:hidden, :value=>script.original_size}
@@ -13,7 +13,7 @@
     
     .scriptDetail
         %a.deleteScript{:href=>"/scripts/delete/#{script.id}"} Remove 
-        %table
+        %table.scriptEditFields
             %tbody
                 %tr
                     %td.scriptEditField
@@ -25,10 +25,11 @@
                         Tags 
                     %td
                         %input.scriptTagsEdit{:id=>"tagsEdit-#{script.id}", :type=>:text, :value => script.tags.join(', ')}
-                %tr
-                    %td.scriptEditField
-                    %td
-                        %a.viewScript{:href=>"/script/#{script.id}"} Code 
+
+        %a.viewScript{:href=>"/script/#{script.id}"} 
+            Toggle script source 
+            %span.viewScriptToggle &#9660;
+
         .scriptCode
             %pre.code
                 %code.javascript

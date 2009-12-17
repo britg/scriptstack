@@ -4,6 +4,7 @@ require 'sinatra'
 require 'haml'
 require 'yui/compressor'
 require 'mongo'
+require 'mongo/gridfs'
 
 require 'models/mongo'
 require 'models/user'
@@ -42,14 +43,28 @@ post '/create' do
     stack.to_json
 end
 
+get '/stacks/:id.js' do
+    id_parts = params[:id].split('.')
+    stack_id = id_parts[0]
+    min = (id_parts.size > 1 ? true : false)
+
+    stack = Stack.find(stack_id)
+
+    content_type 'application/javascript', :charset => 'utf-8'
+
+    if min
+        stack.minified
+    else
+        stack.raw
+    end
+end
+
 get '/stacks/:id' do
     @stack = Stack.find(params[:id])
-    puts 'Stack: ' + @stack.inspect
     @scripts = []
     @stack.scripts.each do |script_id|
         @scripts.push Script.find(script_id, :fields => "name, tags, original_size, minified_size")
     end
-    puts @scripts.to_json
     haml :editor
 end
 

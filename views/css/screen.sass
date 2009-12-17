@@ -20,6 +20,10 @@ body.bp
     +blueprint-debug
     +blueprint-interaction
 
+    td
+        :padding-top 0
+        
+
 form.bp
     +blueprint-form
 
@@ -174,16 +178,27 @@ body.bp
                         &:hover
                             :background #fff
 
+                        &.selected
+                            :background #fff
+
+                        .scriptHandle
+                            :float left
+                            :margin-right 10px
+                            :color #ccc
+                            :cursor move
+
                         .scriptSummary
+                            :cursor pointer
 
                             .scriptName
                                 :font-size 125%
                                 :cursor pointer
                                 :margin-right 20px
+                                :font-weight bold
                             
                             .scriptTags
                                 :font-size 90%
-                                :color #bbb
+                                :color #999
 
                             .scriptSize
                                 :float right
@@ -205,17 +220,12 @@ body.bp
                                     :color #777
 
 
-                            .scriptHandle
-                                :float left
-                                :margin-right 10px
-                                :color #ccc
-                                :cursor move
-
-
                         .scriptDetail
                             :margin-top 10px
-                            :padding-left 20px
                             :display none
+
+                            .scriptEditFields
+                                :padding-left 20px
 
                             .scriptEditField
                                 :width 50px
@@ -233,13 +243,21 @@ body.bp
                                 :float right
                                 :color #999
                                 :text-decoration none
-                                :margin-right 46px
+                                :margin-right 25px
 
                                 &:hover
                                     :color red
 
-                        .scriptCode
-                            :display none
+                            .viewScript
+                                :color #999
+                                :text-decoration none
+                                :padding-left 20px
+
+                                .viewScriptToggle
+                                    :font-size 90%
+
+                            .scriptCode
+                                :display none
 
                 #newScriptButton
                     :border solid 1px
@@ -272,7 +290,7 @@ body.bp
                     #uploadInput
                         +rounded
                         :float left
-                        background= !green
+                        :background= !green
                         :color #fff
                         :border solid 1px
                         :padding 10px
@@ -280,11 +298,10 @@ body.bp
                         :font-size 110%
                         :font-weight bold
                         :cursor pointer
-                        border-color= !green
+                        :border-color= !green
 
                     #urlInput
                         +textinput
-                        :font-size 110%
                         :width 90%
                         :background #fff
 
