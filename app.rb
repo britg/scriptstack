@@ -2,9 +2,9 @@ require 'rubygems'
 require 'compass'
 require 'sinatra'
 require 'haml'
-require 'yui/compressor'
 require 'mongo'
 require 'mongo/gridfs'
+require 'jsmin'
 
 require 'models/mongo'
 require 'models/user'
@@ -116,8 +116,7 @@ post '/scripts/upload' do
     content = tmpfile.read
 
     # Minify and get size
-    compressor = YUI::JavaScriptCompressor.new
-    compressed = compressor.compress(content)
+    compressed = JSMin.minify(content)
 
     script = Script.new({
         :name => name,

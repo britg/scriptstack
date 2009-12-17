@@ -4,4 +4,4 @@ mongo_ext
 mongo_mapper
 haml
 compass
-yui-compressor
+jsmin
