@@ -25,7 +25,7 @@ get '/css/:name.css' do
 end
 
 get '/' do
-    @stacks = Stack.find(:all, :fields => [:title])
+    @stacks = Stack.find(:all, :limit => 10)
     haml :index
 end
 
