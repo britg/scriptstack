@@ -9,20 +9,34 @@
                 %h2.question Collected a killer set of jQuery plugins and want to share them?
                 %p.answer Sweet! Publish your favorite script combinations (a <strong><em>stack</em></strong>) and share them with other devs.
                 %h2.question Need a set of scripts that implements Lightbox2, fancy tooltips, and Twitter search?
-                %p.answer There's a stack for that!  Find the best set of scripts for just about any purpose.
-                %p
-                    %a{:href=>"/users"}Click here to signup
+                %p.answer 
+                    %em Coming Soon.
+                    There's a stack for that!  Find the best set of scripts for just about any purpose.
 
         #splashRight
             #splashRightInner
-                .createButton
-                    %a{:href=>"/create"} 
-                        Click here to create a stack
-                        %br
-                        %span.small (no account required)
+                %a.createButton{:href=>"/create"} 
+                    Click here to create a stack
+                    %br
+                    %span.small (no account required)
 
+                %h3 In development
                 %ul
+                    %li User accounts
+                    %li User-owned stacks
+                    %li Search
+
+                %h3 Recently created stacks
+                %ul.stackList
                     - @stacks.each do |stack|
                         %li
-                            %a{:href=>"/stacks/#{stack.id}"}
-                                = stack.title
+                            %h4.stackTitle
+                                %a{:href=>"/stacks/#{stack.id}"}
+                                    = stack.title
+                            .stackSize
+                                %span.numScripts #{stack.scripts.size} 
+                                scripts, 
+                                %span.stackMinSize= stack.minified_size/1024
+                                \/
+                                %span.stackOriginalSize #{stack.original_size/1024}
+                                kb
