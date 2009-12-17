@@ -61,6 +61,7 @@ Stack.stack.prototype = {
     id: undefined,
     title: "",
     published: false,
+    publishable: false,
     scripts: [],
     script_col: {},
 
@@ -114,11 +115,8 @@ Stack.stack.prototype = {
      * publish, though.
      */
     enablePublish: function () {
-        var _this = this;
-        $('#stackPublish').attr('disabled', false)
-            .click(function () {
-                _this.publish();
-            });
+        this.publishable = true;
+        $('#stackPublish').fadeIn();
     },
 
     /**
@@ -127,6 +125,11 @@ Stack.stack.prototype = {
      */
     publish: function () {
         var _this = this;
+
+        if(!this.publishable) {
+            return;
+        }
+
         this.published = true;
         this.persist(function () {
             window.location = '/stacks/' + _this.id;
@@ -192,6 +195,7 @@ Stack.stack.prototype = {
         var script = new Stack.script(data);
         script.render();
         $('#newScriptCancel').click();
+        $('#' + script.id).find('.scriptSummary').click();
         this.update_summary();
     },
 

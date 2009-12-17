@@ -35,6 +35,13 @@ $(function() {
         "style":"inherit"
     });
 
+    $('#stackPublish').click(function () {
+        if('active_stack' in window) {
+            active_stack.publish();
+        }
+        return false;
+    });
+
     /**
      * Listen for the editable event. If the default message is 
      * still in place, select the entire input.
@@ -102,6 +109,10 @@ $(function() {
         },
         onComplete: function (name, resp) {
             Stack.doneWorking();
+            if(typeof active_stack.id == 'undefined') {
+                active_stack.update(resp.stack);
+                active_stack.enablePublish();
+            }
             active_stack.new_script_upload(resp.script);
         }
     });
@@ -216,6 +227,12 @@ $(function() {
             script.toggle_code();
         });
         return false;
+    });
+
+    $('.saveScript').live('click', function () {
+        var scriptId = $(this).attr('id').split('-')[1];
+        $('#' + scriptId).toggleClass('selected')
+            .find('.scriptDetail').toggle();
     });
 
 });
