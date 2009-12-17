@@ -2,7 +2,7 @@ require 'mongo_mapper'
 require 'mongo/gridfs'
 require 'models/script'
 require 'models/mongo_fast_gridfs'
-require 'yui/compressor'
+require 'jsmin'
 
 class Stack
     include MongoMapper::Document
@@ -69,8 +69,7 @@ class Stack
         end
 
         uncompressed = raw
-        compressor = YUI::JavaScriptCompressor.new
-        compressed = compressor.compress(uncompressed)
+        compressed = JSMin.minify(uncompressed)
 
         GridFS::GridStore.open(MongoMapper.database, filename, 'w') {|f|
             f.fast_write(compressed)
